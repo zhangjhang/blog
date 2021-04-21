@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>分类管理</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.css">
+  <link rel="stylesheet" href="../static/css/me.css">
+</head>
+<body>
+
+  <!--导航-->
+  <div th:insert="~{common/bar::nav}"></div>
+
+  <br>
+  <br>
+  <br>
+  <br>
+  <!--中间内容-->
+<!--  添加保存-->
+  <div  class="m-container-small m-padded-tb-big" th:if="${#strings.isEmpty(type)}">
+    <div class="ui container">
+      <form action="#" th:action="@{/admin/types/typeAdd}" method="post"   class="ui form">
+        <input type="hidden" name="id" >
+        <div class=" field">
+          <div class="ui left labeled input">
+            <label class="ui teal basic label">名称</label>
+            <input type="text" name="name" placeholder="标签名称"  >
+          </div>
+        </div>
+
+        <div class="ui error message"></div>
+
+        <div class="ui right aligned container">
+          <button type="button" class="ui button" onclick="window.history.go(-1)" >返回</button>
+          <button class="ui teal submit button">保存</button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+
+<!--  更新-->
+  <div  class="m-container-small m-padded-tb-big" th:unless="${#strings.isEmpty(type)}">
+    <div class="ui container">
+      <form action="#" th:action="@{/admin/types/typeUpdate}" method="post"   class="ui form">
+        <input type="hidden" name="id" th:value="${type.getId()}" >
+        <div class=" field">
+          <div class="ui left labeled input">
+            <label class="ui teal basic label">名称</label>
+            <input type="text" name="name" th:value="${type.getName()}" placeholder="分类名称"  >
+          </div>
+        </div>
+
+        <div class="ui error message"></div>
+
+        <div class="ui right aligned container">
+          <button type="button" class="ui button" onclick="window.history.go(-1)" >返回</button>
+          <button class="ui teal submit button">更新</button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+
+  <br>
+  <br>
+  <!--底部footer-->
+  <footer th:insert="~{common/bar::footer}"></footer>
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.js"></script>
+
+  <script>
+    $('.menu.toggle').click(function () {
+      $('.m-item').toggleClass('m-mobile-hide');
+    });
+
+    $('.ui.dropdown').dropdown({
+      on : 'hover'
+    });
+
+
+  </script>
+</body>
+</html>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zjh.mapper.TypeMapper">
+    <select id="pageTypes" resultType="type">
+        select id,name from t_type
+    </select>
+    <select id="queryAllType" resultType="type">
+        select * from t_type
+    </select>
+    <insert id="saveType" parameterType="type">
+        insert into t_type values(#{id},#{name})
+    </insert>
+    <delete id="deleteTypeById">
+        delete from t_type where id = #{id}
+    </delete>
+    <update id="updateType" parameterType="type">
+        update t_type set name = #{name} where id = #{id} ;
+    </update>
+    <select id="queryTypeById" resultType="type">
+        select * from t_type where id = #{id}
+    </select>
+    <select id="queryBlogCountById" resultType="Integer">
+        select count(*) from t_type t,t_blog b where t.id = b.type_id and t.id = #{id}
+    </select>
+</mapper>

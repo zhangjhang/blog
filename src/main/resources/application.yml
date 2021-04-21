@@ -1,0 +1,17 @@
+spring:
+  mvc:
+    static-path-pattern: /static/**
+
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/blog_demo
+    username: root
+    password: root
+
+mybatis-plus:
+  mapper-locations: classpath*:mapper/*Mapper.xml
+  type-aliases-package: com.zjh.pojo
+
+logging:
+  level:
+    com.zjh.mapper: debug

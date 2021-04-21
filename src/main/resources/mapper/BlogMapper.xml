@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zjh.mapper.BlogMapper">
+    <select id="pageBlog" resultType="blog">
+        select * from t_blog
+    </select>
+    <select id="queryAllBlog" resultType="blog">
+        select * from t_blog
+    </select>
+    <insert id="saveBlog" parameterType="blog">
+        insert into t_blog
+         (id,appreciation,commentabled,content
+         ,create_time,first_picture,flag
+         ,published,recommend,share_statement,
+         title,update_time,views,type_id,user_id)
+          values (#{id},#{appreciation},#{commentabled},#{content},#{createTime}
+          ,#{firstPicture},#{flag},#{published},#{recommend},#{shareStatement}
+          ,#{title},#{updateTime},#{views},#{type.id},#{user.id});
+    </insert>
+    <select id="queryBlogByTitle" resultType="blog">
+        select * from t_blog where title = #{title}
+    </select>
+    <insert id="saveTagByBlogId" >
+        insert into t_blog_tags values(#{blogId},#{tagId})
+    </insert>
+    <delete id="deleteBlogById">
+        delete from t_blog where id = #{id}
+    </delete>
+    <select id="queryBlogById" resultMap="blogType">
+
+
+        select * ,t.id tid ,t.name tname,tt.id ttid,tt.name ttname from
+         t_blog b,t_type t,t_blog_tags tbt,t_tag tt
+         where b.type_id = t.id
+ and b.id = tbt.blogs_id and tbt.tags_id = tt.id and b.id = #{id}
+    </select>
+    <resultMap id="blogType" type="blog">
+        <result property="id" column="id"/>
+        <result property="title" column="title"/>
+        <result property="content" column="content"/>
+        <result property="firstPicture" column="firstPicture"/>
+        <result property="flag" column="flag"/>
+        <result property="views" column="views"/>
+
+        <result property="appreciation" column="appreciation"/>
+        <result property="shareStatement" column="shareStatement"/>
+        <result property="commentabled" column="commentabled"/>
+        <result property="published" column="published"/>
+        <result property="recommend" column="recommend"/>
+
+        <result property="createTime" column="create_time"/>
+        <result property="updateTime" column="update_time"/>
+
+
+        <association property="type" javaType="type">
+            <result property="id" column="tid"/>
+            <result property="name" column="tname"/>
+        </association>
+
+                <collection property="tags"  ofType="Tag">
+                    <result property="id" column="ttid"/>
+                    <result property="name" column="ttname"/>
+                </collection>
+
+    </resultMap>
+
+    <update id="updateBlog" parameterType="blog">
+        update t_blog set  appreciation = #{appreciation},commentabled=#{commentabled},content=#{content}
+          ,first_picture=#{firstPicture},flag=#{flag},published=#{published},recommend=#{recommend},share_statement=#{shareStatement}
+          ,title=#{title},update_time=#{updateTime},views=#{views},type_id=#{type.id} where id = #{id}
+    </update>
+
+</mapper>
